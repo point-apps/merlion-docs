@@ -1,9 +1,9 @@
 export const description =
   'On this page, we’ll dive into the different capture endpoints you can use to manage captures programmatically.'
 
-# Capture
+# Captures
 
-Capture
+Capture activity user
 
 ## The capture model
 
@@ -16,46 +16,91 @@ The capture model contains all the information about your captures.
     Unique identifier for the capture.
   </Property>
   <Property name="activity" type="string">
-    ...
+    User activity
+  </Property>
+  <Property name="files" type="array<string>">
+    User activity files upload
   </Property>
   <Property name="description" type="string">
-    ...
+    More description about user activity
   </Property>
-  <Property name="activity_date" type="datetime">
-    ...
+  <Property name="date" type="datetime">
+    Activity date
   </Property>
   <Property name="observer" type="string">
-    ...
+    Name of people who observe the user
   </Property>
-  <Property name="cluster" type="enum">
+  <Property name="clusters" type="array<object>">
+    Clustering ikigai based of activity
+    <table>
+      <thead>
+        <tr>
+          <th>Cluster</th>
+          <th>Typology</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Servicing</td>
+          <td>`Caretaking` `Serving`</td>
+        </tr>
+        <tr>
+          <td>Thinking</td>
+          <td>`Analysing` `Treasuring`</td>
+        </tr>
+        <tr>
+          <td>Reasoning</td>
+          <td>`Restoring` `Evaluation` `Exploring`</td>
+        </tr>
+        <tr>
+          <td>Elementary</td>
+          <td>`Journalising` `Interpreting` `Administrating`</td>
+        </tr>
+        <tr>
+          <td>Networking</td>
+          <td>`Ambasading` `Communicating` `Educating` `Motivating`</td>
+        </tr>
+        <tr>
+          <td>Generating Idea</td>
+          <td>`Designing` `Creating` `Synthesizing` `Marketing` `Strategising` `Visioning` `Acting` `Beautifying` `Conserving` `Cooking` `Dancing` `Dramatizing` `Modelling` `Musical Art` `Singing` `Visual Art`</td>
+        </tr>
+        <tr>
+          <td>Technical</td>
+          <td>`Safekeeping` `Producing` `Quality Controlling` `Distributing` `Operating` `Manual Skill` `Physical Skill` `Planting` `Sport` `Tending Animal`</td>
+        </tr>
+        <tr>
+          <td>Headman</td>
+          <td>`Arranging` `Selling` `Commanding` `Mediating` `Selecting`</td>
+        </tr>
+      </tbody>
+    </table>
+  </Property>
+  <Property name="cluster.name" type="enum">
+    Clustering ikigai based of activity
     `Servicing` `Thinking` `Reasoning` `Elementary` `Networking` `Generating Idea` `Technical` `Headman`
   </Property>
-  <Property name="typology" type="Array<obj>">
-    `serving` `caretaking` 
-
-    ```
-    {
-      name: serving,
-      xxx: ['easy', 'excelent']
-      easy: true
-      excelent: true
-      enjoy: false
-    }
-    ```
+  <Property name="cluster.typologies" type="array<object>">
+    Typologies of choosen cluster
   </Property>
-  <Property name="institution" type="objectId">
-    ...
+  <Property name="cluster.typologies.name" type="enum">
+    Typology name
   </Property>
-  <Property name="isDraft" type="boolean">
-    ...
+  <Property name="cluster.typologies.ikigai" type="array<string>">
+    Ikigai type `enjoy` `easy` `excelent` `earn`
   </Property>
-  <Property name="documentLinks" type="Array<string>">
-    ...
+  <Property name="institution_id" type="objectId<institutions>">
+    Which institution user come from
+  </Property>
+  <Property name="isPublished" type="boolean">
+    Is this capture activity is published 
+  </Property>
+  <Property name="publishedAt" type="timestamp">
+    Timestamp of when the capture was published.
+  </Property>
+  <Property name="createdBy_id" type="objectId<users>">
+    User who created this captures
   </Property>
   <Property name="createdAt" type="timestamp">
-    Timestamp of when the capture was created.
-  </Property>
-  <Property name="createdBy" type="objectId">
     Timestamp of when the capture was created.
   </Property>
   <Property name="updatedAt" type="timestamp">
@@ -81,6 +126,12 @@ The capture model contains all the information about your captures.
       <Property name="pageSize" type="integer">
         The page size number of captures returned.
       </Property>
+      <Property name="search" type="integer">
+        The query for filter based on text
+      </Property>
+      <Property name="sort" type="integer">
+        Sorting data by attributes ascending or descending
+      </Property>
     </Properties>
 
   </Col>
@@ -93,7 +144,6 @@ The capture model contains all the information about your captures.
           page:1,
           pageSize: 10,
           search: '',
-          isDraft: true,
         },
         sort: 'date-'
       }
@@ -106,16 +156,20 @@ The capture model contains all the information about your captures.
       "captures": [
         {
           "_id": "637b569149e0c02e1036c35a",
-          "activity": "Catur",
+          "activity": "Chess",
+          "files": ["https://..."],
+          "description": "Chess Competition at School",
           "clusters": [
             {
-              "name": "A"
-            },
-            {
-              "name": "B"
+              "name": 'Thinking',
+              "typologies": [
+                {
+                  "name": 'Analysing',
+                  "ikigai": ['easy', 'excelent']
+                }
+              ]
             }
           ],
-          "isDraft": false,
           "date": "2022-01-01T00:00:00.000Z",
         },
       ],
@@ -143,8 +197,39 @@ The capture model contains all the information about your captures.
     ### Required attributes
 
     <Properties>
-      <Property name="name" type="string">
-        The name for the capture.
+      <Property name="activity" type="string">
+        User activity
+      </Property>
+      <Property name="files" type="array<string>">
+        User activity files upload
+      </Property>
+      <Property name="description" type="string">
+        More description about user activity
+      </Property>
+      <Property name="date" type="datetime">
+        Activity date
+      </Property>
+      <Property name="observer" type="string">
+        Name of people who observe the user
+      </Property>
+      <Property name="clusters" type="array<object>">
+        Clustering ikigai based of activity
+      </Property>
+      <Property name="cluster.name" type="enum">
+        Clustering ikigai based of activity
+        `Servicing` `Thinking` `Reasoning` `Elementary` `Networking` `Generating Idea` `Technical` `Headman`
+      </Property>
+      <Property name="cluster.typologies" type="array<object>">
+        Typologies of choosen cluster
+      </Property>
+      <Property name="cluster.typologies.name" type="enum">
+        Typology name
+      </Property>
+      <Property name="cluster.typologies.ikigai" type="array<string>">
+        Ikigai type `enjoy` `easy` `excelent` `earn`
+      </Property>
+      <Property name="isPublished" type="boolean">
+        Is this capture activity is published 
       </Property>
     </Properties>
   </Col>
@@ -153,10 +238,11 @@ The capture model contains all the information about your captures.
     ```typescript {{ title: 'axios' }}
     const response = axios.post('/v1/captures', {
       files: ['https://...', 'https://...'],
-      activity: 'Catur',
-      description: 'Lomba Catur 17 Agustus 2022',
+      activity: 'Chess',
+      description: 'Chess Tournament 2022',
       date: '2022-08-17 15:00:00',
       observer: 'John Doe',
+      isPublished: false,
       cluster: [
         {
           name: 'Thinking',
@@ -213,8 +299,8 @@ The capture model contains all the information about your captures.
     {
       "_id": "objectId",
       "files": ["https://...", "https://..."],
-      "activity": "Catur",
-      "description": "Lomba Catur 17 Agustus 2022",
+      "activity": "Chess",
+      "description": "Chess Tournament 2022",
       "date": "2022-08-17 15:00:00",
       "observer": "John Doe",
       "cluster": [
@@ -242,7 +328,7 @@ The capture model contains all the information about your captures.
         }
       ],
       "institution": "Merlion School",
-      "isDraft": false,
+      "isPublished": false,
       "user_id": "objectId",
       "createdAt": "timestamp",
       "updatedAt": "timestamp",
@@ -259,22 +345,81 @@ The capture model contains all the information about your captures.
 <Row>
   <Col>
 
-    This endpoint allows you to perform an update on a capture.
+    This endpoint allows you to update a capture.
 
-    ### Optional attributes
+    ### Required attributes
 
     <Properties>
-      <Property name="name" type="string">
-        The name for the capture.
+      <Property name="activity" type="string">
+        User activity
+      </Property>
+      <Property name="files" type="array<string>">
+        User activity files upload
+      </Property>
+      <Property name="description" type="string">
+        More description about user activity
+      </Property>
+      <Property name="date" type="datetime">
+        Activity date
+      </Property>
+      <Property name="observer" type="string">
+        Name of people who observe the user
+      </Property>
+      <Property name="clusters" type="array<object>">
+        Clustering ikigai based of activity
+      </Property>
+      <Property name="cluster.name" type="enum">
+        Clustering ikigai based of activity
+        `Servicing` `Thinking` `Reasoning` `Elementary` `Networking` `Generating Idea` `Technical` `Headman`
+      </Property>
+      <Property name="cluster.typologies" type="array<object>">
+        Typologies of choosen cluster
+      </Property>
+      <Property name="cluster.typologies.name" type="enum">
+        Typology name
+      </Property>
+      <Property name="cluster.typologies.ikigai" type="array<string>">
+        Ikigai type `enjoy` `easy` `excelent` `earn`
+      </Property>
+      <Property name="isPublished" type="boolean">
+        Is this capture activity is published 
       </Property>
     </Properties>
-
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="PATCH" label="/v1/captures/637d83d15d2be122007524bf">
+    <CodeGroup title="Request" tag="PATCH" label="/v1/captures">
     ```typescript {{ title: 'axios' }}
-    const response = axios.patch('/v1/captures/637d83d15d2be122007524bf', {
-      name: "Administrator"
+    const response = axios.post('/v1/captures', {
+      files: ['https://...', 'https://...'],
+      activity: 'Chess',
+      description: 'Chess Tournament 2022',
+      date: '2022-08-17 15:00:00',
+      observer: 'John Doe',
+      isPublished: true,
+      cluster: [
+        {
+          name: 'Thinking',
+          typologies: [
+            {
+              name: 'Analysing',
+              ikigai: ['easy', 'excelent']
+            }
+          ]
+        },
+        {
+          name: 'Reasoning',
+          typologies: [
+            {
+              name: 'Evanluating',
+              ikigai: ['easy']
+            },
+            {
+              name: 'Exploring',
+              ikigai: ['easy', 'excelent', 'enjoy', 'earn']
+            }
+          ]
+        }
+      ],
     })
     ```
     </CodeGroup>
@@ -309,44 +454,3 @@ The capture model contains all the information about your captures.
 </Row>
 
 ---
-
-## Assign permissions {{ tag: 'PATCH', label: '/v1/captures/:id/assign-permissions' }}
-
-<Row>
-  <Col>
-
-    This endpoint allows you to perform an update on a capture to assign permission.
-
-    ### Optional attributes
-
-    <Properties>
-      <Property name="permissions" type="array<string>">
-        The array of permission name for the capture.
-      </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-    <CodeGroup title="Request" tag="PATCH" label="/v1/captures/637d83d15d2be122007524bf">
-    ```typescript {{ title: 'axios' }}
-    const response = axios.patch('/v1/captures/637d83d15d2be122007524bf', {
-      permissions: [
-        {
-          name: 'create-user',
-          assign: true
-        },
-        {
-          name: 'read-user',
-          assign: false
-        }
-      ]
-    })
-    ```
-    </CodeGroup>
-    <CodeGroup title="Response">
-    ```json {{ title: '204' }}
-    // empty response
-    ```
-    </CodeGroup>
-  </Col>
-</Row>
