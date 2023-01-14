@@ -1,0 +1,142 @@
+export const description =
+  'On this page, we’ll dive into the different capture endpoints you can use to manage captures programmatically.'
+
+# Spider Chart Report
+
+Spider Chart Report
+
+## Get spider chart report {{ tag: 'GET', label: '/v1/report/spider-chart' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of spider chart report based on authenticated user.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="dateStart" type="datetime">
+        The starting date for filtering report
+      </Property>
+      <Property name="dateEnd" type="datetime">
+        The ending date for filtering report
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="page" type="integer">
+        The page number of captures returned.
+        - default `1`
+      </Property>
+      <Property name="pageSize" type="integer">
+        The page size number of captures returned.
+        - default `10`
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/captures">
+    ```typescript {{ title: 'axios' }}
+    const response = axios.get('/v1/report/ikigai', {
+      params: {
+        filter: {
+          dateStart: '',
+          dateEnd: ''
+        }
+      }
+    })
+    ```
+    </CodeGroup>
+    <CodeGroup title="Response">
+    ```json {{ title: '200' }}
+    {
+      "clusters": [
+        {
+          "name": "Servicing",
+          "count": 0,
+        },
+        {
+          "name": "Headman",
+          "count": 15,
+        }
+      ]
+    }
+    ```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## Get spider chart typologies report {{ tag: 'GET', label: '/v1/report/spider-chart/:cluster_id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list spider chart typologies report.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="dateStart" type="datetime">
+        The starting date for filtering report
+      </Property>
+      <Property name="dateEnd" type="datetime">
+        The ending date for filtering report
+      </Property>
+      <Property name="cluster" type="string">
+        The cluster name
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="page" type="integer">
+        The page number of captures returned.
+        - default `1`
+      </Property>
+      <Property name="pageSize" type="integer">
+        The page size number of captures returned.
+        - default `10`
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="GET" label="/v1/captures">
+    ```typescript {{ title: 'axios' }}
+    const response = axios.get('/v1/report/ikigai', {
+      params: {
+        filter: {
+          dateStart: '',
+          dateEnd: '',
+          cluster: 'Servicing'
+        }
+      }
+    })
+    ```
+    </CodeGroup>
+    <CodeGroup title="Response">
+    ```json {{ title: '200' }}
+    {
+     "typologies": [
+        {
+          "name": "Caretaking",
+          "count": 2
+        },
+        {
+          "name": "Serving",
+          "count": 8
+        }
+      ]
+    }
+    ```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---

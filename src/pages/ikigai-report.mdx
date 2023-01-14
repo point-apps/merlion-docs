@@ -5,22 +5,16 @@ export const description =
 
 Ikigai report from captures activity
 
-## List all captures {{ tag: 'GET', label: '/v1/captures' }}
+## Get ikigai report {{ tag: 'GET', label: '/v1/ikigai-report' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to retrieve a paginated list of all your captures. By default, a maximum of ten captures are shown per page.
-
-    ### Optional attributes
+    This endpoint allows you to retrieve a paginated list of ikigai report based on authenticated user.
+    
+    ### Required attributes
 
     <Properties>
-      <Property name="page" type="integer">
-        The page number of captures returned.
-      </Property>
-      <Property name="pageSize" type="integer">
-        The page size number of captures returned.
-      </Property>
       <Property name="dateStart" type="datetime">
         The starting date for filtering report
       </Property>
@@ -32,6 +26,19 @@ Ikigai report from captures activity
       </Property>
       <Property name="ikigai.type" type="string">
         Ikigai type `enjoy` `easy` `excelent` `earn`
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+     <Properties>
+      <Property name="page" type="integer">
+        The page number of captures returned.
+        - default `1`
+      </Property>
+      <Property name="pageSize" type="integer">
+        The page size number of captures returned.
+        - default `10`
       </Property>
     </Properties>
 

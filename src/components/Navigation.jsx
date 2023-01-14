@@ -202,8 +202,8 @@ export const navigation = [
       { title: 'Roles', href: '/roles' },
       { title: 'Users', href: '/users' },
       { title: 'Captures', href: '/captures' },
-      { title: 'Ikigai', href: '/ikigai' },
-      { title: 'Spider Chart', href: '/spider-chart' },
+      { title: 'Ikigai Report', href: '/ikigai-report' },
+      { title: 'Spider Chart Report', href: '/spider-chart-report' },
     ],
   },
 ]
